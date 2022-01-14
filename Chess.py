@@ -67,9 +67,9 @@ class Board:
 
 
 pygame.init()
-screen = pygame.display.set_mode((1400, 900), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
 board = Board(8, 8)
-board.set_view(400, 100, 100)
+board.set_view(800, 140, 100)
 running = True
 clock = pygame.time.Clock()
 while running:
@@ -79,6 +79,6 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             board.get_click(event.pos)
-    screen.fill((0, 0, 0))
+    screen.fill((64, 58, 58))
     board.render(screen)
     pygame.display.flip()
