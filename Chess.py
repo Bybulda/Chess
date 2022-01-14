@@ -33,6 +33,7 @@ class Board:
                                       self.cell_size,
                                       self.cell_size),
                                      0)
+
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
         if posx <= 0 or posy <= 0:
