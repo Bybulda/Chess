@@ -19,20 +19,26 @@ class Board:
     def render(self, surface):
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
+                brdlt = 25 if i == 0 and j == 0 else -1
+                brdrt = 25 if i == 0 and j == 7 else -1
+                brdll = 25 if i == 7 and j == 0 else -1
+                brdlr = 25 if i == 7 and j == 7 else -1
                 if i % 2 == 0 and j % 2 == 0 or j % 2 == 1 and i % 2 == 1:
                     pygame.draw.rect(surface, (255, 235, 205),
                                      (self.left + self.cell_size * j,
                                       self.top + self.cell_size * i,
                                       self.cell_size,
                                       self.cell_size),
-                                     0)
+                                     0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
+                                     border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
                 elif i % 2 == 1 and j % 2 == 0 or j % 2 == 1 and i % 2 == 0:
                     pygame.draw.rect(surface, (60, 170, 60),
                                      (self.left + self.cell_size * j,
                                       self.top + self.cell_size * i,
                                       self.cell_size,
                                       self.cell_size),
-                                     0)
+                                     0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
+                                     border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
 
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
