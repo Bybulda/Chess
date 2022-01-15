@@ -12,7 +12,7 @@ def load_image(name, colorkey=None):
     image = pygame.image.load(fullname)
     if colorkey is not None:
         image = image.convert()
-        if colorkey != -1:
+        if colorkey == -1:
             colorkey = image.get_at((0, 0))
         image.set_colorkey(colorkey)
     else:
@@ -68,22 +68,11 @@ class Board:
                                       self.cell_size),
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
-            image = load_image("owls.png", -1)
-            screen.blit(image, (825, 740))
-            image = load_image("owls.png", -1)
-            screen.blit(image, (925, 740))
-            image = load_image("owls.png", -1)
-            screen.blit(image, (1025, 740))
-            image = load_image("owls.png", -1)
-            screen.blit(image, (1125, 740))
-            image = load_image("owls.png", -1)
-            screen.blit(image, (1225, 740))
-            image = load_image("owls.png", -1)
-            screen.blit(image, (1325, 740))
-            image = load_image("owls.png", -1)
-            screen.blit(image, (1425, 740))
-            image = load_image("owls.png", -1)
-            screen.blit(image, (1525, 740))
+            for i in range(800, 1501, 100):
+                image = load_image("peshka.png")
+                screen.blit(image, (i, 240))
+                image = load_image("peshka_bel.png")
+                screen.blit(image, (i, 740))
 
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
