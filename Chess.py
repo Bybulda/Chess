@@ -1,4 +1,23 @@
 import pygame
+import os
+import sys
+
+
+def load_image(name, colorkey=None):
+    fullname = os.path.join('data', name)
+    # если файл не существует, то выходим
+    if not os.path.isfile(fullname):
+        print(f"Файл с изображением '{fullname}' не найден")
+        sys.exit()
+    image = pygame.image.load(fullname)
+    if colorkey is not None:
+        image = image.convert()
+        if colorkey == -1:
+            colorkey = image.get_at((0, 0))
+        image.set_colorkey(colorkey)
+    else:
+        image = image.convert_alpha()
+    return image
 
 
 class Board:
@@ -49,6 +68,22 @@ class Board:
                                       self.cell_size),
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
+            image = load_image("owls.png", -1)
+            screen.blit(image, (825, 740))
+            image = load_image("owls.png", -1)
+            screen.blit(image, (925, 740))
+            image = load_image("owls.png", -1)
+            screen.blit(image, (1025, 740))
+            image = load_image("owls.png", -1)
+            screen.blit(image, (1125, 740))
+            image = load_image("owls.png", -1)
+            screen.blit(image, (1225, 740))
+            image = load_image("owls.png", -1)
+            screen.blit(image, (1325, 740))
+            image = load_image("owls.png", -1)
+            screen.blit(image, (1425, 740))
+            image = load_image("owls.png", -1)
+            screen.blit(image, (1525, 740))
 
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
@@ -83,6 +118,9 @@ board.set_view(800, 140, 100)
 running = True
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 40)
+
+
+
 while running:
     clock.tick(10)
     for event in pygame.event.get():
