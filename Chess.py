@@ -16,8 +16,16 @@ class Board:
         self.top = top
         self.cell_size = cell_size
 
+    def fonter(self, word, x, y):
+        text = font.render(f'{word}', True, [255, 255, 255])
+        screen.blit(text, (x, y))
+
     def render(self, surface):
+        n = 8
+        strk = 'ABCDEFGH'
         for i in range(len(self.board)):
+            self.fonter(n, 780, self.top + self.cell_size * i + 40)
+            n -= 1
             for j in range(len(self.board[i])):
                 brdlt = 25 if i == 0 and j == 0 else -1
                 brdrt = 25 if i == 0 and j == 7 else -1
@@ -31,7 +39,9 @@ class Board:
                                       self.cell_size),
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
-                elif i % 2 == 1 and j % 2 == 0 or j % 2 == 1 and i % 2 == 0:
+                if i == 0:
+                    self.fonter(strk[j], self.left + self.cell_size * j + 40, 110)
+                if i % 2 == 1 and j % 2 == 0 or j % 2 == 1 and i % 2 == 0:
                     pygame.draw.rect(surface, (60, 170, 60),
                                      (self.left + self.cell_size * j,
                                       self.top + self.cell_size * i,
@@ -72,6 +82,7 @@ board = Board(8, 8)
 board.set_view(800, 140, 100)
 running = True
 clock = pygame.time.Clock()
+font = pygame.font.Font(None, 40)
 while running:
     clock.tick(10)
     for event in pygame.event.get():
