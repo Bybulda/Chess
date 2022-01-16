@@ -134,7 +134,6 @@ running = True
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 40)
 font2 = pygame.font.SysFont('arial', 20)
-a = 10
 
 
 while running:
