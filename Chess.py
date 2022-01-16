@@ -30,7 +30,7 @@ class Board:
         self.cell_size = 30
         self.cl = 0
         self.figures = {'слон': [(1050, 840), (1550, 840)], 'королева': [(1250, 840)],
-                        'ладья': [(950, 840), (1650, 840)],'конь': [(1150, 840), (1450, 840)],
+                        'ладья': [(950, 840), (1650, 840)], 'конь': [(1150, 840), (1450, 840)],
                         'пешка': [(i, 740) for i in range(950, 1651, 100)], 'король': [(1350, 840)]}
 
     def set_view(self, left, top, cell_size):
@@ -100,10 +100,12 @@ class Board:
                              (250, 487, 50, 100),
                              0, border_top_left_radius=25, border_top_right_radius=25,
                              border_bottom_left_radius=25, border_bottom_right_radius=25)
+            for il in range(290, 691, 400):
+                image = load_image(f"палка.png")
+                screen.blit(image, (50, il))
             image = load_image(f"конь_ч.png")
             screen.blit(image, (50, 190))
             self.fonter('7', 125, 267, font2, (100, 100, 100))
-
 
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
@@ -134,7 +136,6 @@ running = True
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 40)
 font2 = pygame.font.SysFont('arial', 20)
-
 
 while running:
     clock.tick(10)
