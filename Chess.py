@@ -29,6 +29,10 @@ class Board:
         self.top = 10
         self.cell_size = 30
         self.cl = 0
+        self.figures = {'слон': [(900, 840), (1400, 840)], 'королева': [(1100, 840)],
+                        'ладья': [(800, 840), (1500, 840)],
+                        'пешка': [(i, 740) for i in range(800, 1501, 100)],
+                        'конь': [(1000, 840), (1300, 840)]}
 
     def set_view(self, left, top, cell_size):
         self.left = left
@@ -38,6 +42,14 @@ class Board:
     def fonter(self, word, x, y):
         text = font.render(f'{word}', True, [255, 255, 255])
         screen.blit(text, (x, y))
+
+    def sprite(self):
+        for i in self.figures.keys():
+            for j in self.figures[i]:
+                image = load_image(f"{i}.png")
+                screen.blit(image, j)
+                image = load_image(f"{i}_ч.png")
+                screen.blit(image, (j[0], 140 if j[1] == 840 else 240))
 
     def render(self, surface):
         n = 8
@@ -68,11 +80,7 @@ class Board:
                                       self.cell_size),
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
-            for i in range(800, 1501, 100):
-                image = load_image("peshka.png")
-                screen.blit(image, (i, 240))
-                image = load_image("peshka_bel.png")
-                screen.blit(image, (i, 740))
+            self.sprite()
 
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
