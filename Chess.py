@@ -89,7 +89,7 @@ class Board:
                         ]
             # image = load_image(f"кнопка_б.png")
             # screen.blit(image, (200, 487))
-            image = load_image(f"кнопка_ч.png")
+            image = load_image(f"кнопка_б.png")
             screen.blit(image, (250, 487))
             for el in positive:
                 pygame.draw.rect(surface, (54, 48, 48),
