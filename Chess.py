@@ -29,9 +29,12 @@ class Board:
         self.top = 10
         self.cell_size = 30
         self.cl = 0
-        self.figures = {'слон': [(1150, 840), (1450, 840)], 'королева': [(1250, 840)],
-                        'ладья': [(950, 840), (1650, 840)], 'конь': [(1050, 840), (1550, 840)],
-                        'пешка': [(i, 740) for i in range(950, 1651, 100)], 'король': [(1350, 840)]}
+        self.figures = {'пешка': [(i, 740) for i in range(950, 1651, 100)], 'ладья': [(950, 840), (1650, 840)],
+                        'конь': [(1050, 840), (1550, 840)], 'слон': [(1150, 840), (1450, 840)],
+                        'королева': [(1250, 840)], 'король': [(1350, 840)]}
+        # self.figures = {'слон': [(1150, 840), (1450, 840)], 'королева': [(1250, 840)],
+        #                         'ладья': [(950, 840), (1650, 840)], 'конь': [(1050, 840), (1550, 840)],
+        #                         'пешка': [(i, 740) for i in range(950, 1651, 100)], 'король': [(1350, 840)]}
 
     def set_view(self, left, top, cell_size):
         self.left = left
@@ -44,7 +47,8 @@ class Board:
 
     def sprite(self):
         xch, ych, yb = 50, 190, 790
-        for i in sorted(self.figures.keys()):
+        # for i in sorted(self.figures.keys()):
+        for i in self.figures.keys():
             image1 = load_image(f"{i}.png")
             screen.blit(image1, (xch, ych))
             image2 = load_image(f"{i}_ч.png")
