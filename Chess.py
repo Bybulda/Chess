@@ -45,9 +45,9 @@ class Board:
     def sprite(self):
         xch, ych, yb = 50, 190, 790
         for i in sorted(self.figures.keys()):
-            image1 = load_image(f"{i}_ч.png")
+            image1 = load_image(f"{i}.png")
             screen.blit(image1, (xch, ych))
-            image2 = load_image(f"{i}.png")
+            image2 = load_image(f"{i}_ч.png")
             screen.blit(image2, (xch, yb))
             xch += 140
             for j in self.figures[i]:
@@ -86,7 +86,11 @@ class Board:
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
             positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100),
-                        (250, 487, 50, 100)]
+                        ]
+            # image = load_image(f"кнопка_б.png")
+            # screen.blit(image, (200, 487))
+            image = load_image(f"кнопка_ч.png")
+            screen.blit(image, (250, 487))
             for el in positive:
                 pygame.draw.rect(surface, (54, 48, 48),
                                  el,
