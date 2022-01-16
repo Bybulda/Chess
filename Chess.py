@@ -29,17 +29,17 @@ class Board:
         self.top = 10
         self.cell_size = 30
         self.cl = 0
-        self.figures = {'слон': [(900, 840), (1400, 840)], 'королева': [(1100, 840)],
-                        'ладья': [(800, 840), (1500, 840)],'конь': [(1000, 840), (1300, 840)],
-                        'пешка': [(i, 740) for i in range(800, 1501, 100)]}
+        self.figures = {'слон': [(1050, 840), (1550, 840)], 'королева': [(1250, 840)],
+                        'ладья': [(950, 840), (1650, 840)],'конь': [(1150, 840), (1450, 840)],
+                        'пешка': [(i, 740) for i in range(950, 1651, 100)], 'король': [(1350, 840)]}
 
     def set_view(self, left, top, cell_size):
         self.left = left
         self.top = top
         self.cell_size = cell_size
 
-    def fonter(self, word, x, y):
-        text = font.render(f'{word}', True, [255, 255, 255])
+    def fonter(self, word, x, y, fint, color):
+        text = fint.render(f'{word}', True, color)
         screen.blit(text, (x, y))
 
     def sprite(self):
@@ -54,7 +54,7 @@ class Board:
         n = 8
         strk = 'ABCDEFGH'
         for i in range(len(self.board)):
-            self.fonter(n, 780, self.top + self.cell_size * i + 40)
+            self.fonter(n, 930, self.top + self.cell_size * i + 40, font, 'white')
             n -= 1
             for j in range(len(self.board[i])):
                 brdlt = 25 if i == 0 and j == 0 else -1
@@ -70,7 +70,7 @@ class Board:
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
                 if i == 0:
-                    self.fonter(strk[j], self.left + self.cell_size * j + 40, 110)
+                    self.fonter(strk[j], self.left + self.cell_size * j + 40, 110, font, 'white')
                 if i % 2 == 1 and j % 2 == 0 or j % 2 == 1 and i % 2 == 0:
                     pygame.draw.rect(surface, (60, 170, 60),
                                      (self.left + self.cell_size * j,
@@ -80,6 +80,30 @@ class Board:
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
             self.sprite()
+            pygame.draw.rect(surface, (54, 48, 48),
+                             (50, 187, 800, 105),
+                             0, border_top_left_radius=25, border_top_right_radius=25,
+                             border_bottom_left_radius=25, border_bottom_right_radius=25)
+            pygame.draw.rect(surface, (54, 48, 48),
+                             (50, 787, 800, 105),
+                             0, border_top_left_radius=25, border_top_right_radius=25,
+                             border_bottom_left_radius=25, border_bottom_right_radius=25)
+            pygame.draw.rect(surface, (54, 48, 48),
+                             (350, 387, 200, 100),
+                             0, border_top_left_radius=25, border_top_right_radius=25,
+                             border_bottom_left_radius=25, border_bottom_right_radius=25)
+            pygame.draw.rect(surface, (54, 48, 48),
+                             (350, 587, 200, 100),
+                             0, border_top_left_radius=25, border_top_right_radius=25,
+                             border_bottom_left_radius=25, border_bottom_right_radius=25)
+            pygame.draw.rect(surface, (54, 48, 48),
+                             (250, 487, 50, 100),
+                             0, border_top_left_radius=25, border_top_right_radius=25,
+                             border_bottom_left_radius=25, border_bottom_right_radius=25)
+            image = load_image(f"конь_ч.png")
+            screen.blit(image, (50, 190))
+            self.fonter('7', 125, 267, font2, (100, 100, 100))
+
 
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
@@ -94,12 +118,7 @@ class Board:
         return rowi, coli
 
     def on_click(self, cell):
-        x, y = cell[0], cell[1]
-        self.board[x][y] = 0 if self.board[x][y] else 1
-        for xl in range(0, self.width):
-            self.board[x][xl] = 0 if self.board[x][xl] else 1
-        for yl in range(0, self.height):
-            self.board[yl][y] = 0 if self.board[yl][y] else 1
+        pass
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
@@ -110,11 +129,11 @@ class Board:
 pygame.init()
 screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
 board = Board(8, 8)
-board.set_view(800, 140, 100)
+board.set_view(950, 140, 100)
 running = True
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 40)
-
+font2 = pygame.font.SysFont('arial', 20)
 
 
 while running:
