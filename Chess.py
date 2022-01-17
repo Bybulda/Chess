@@ -83,8 +83,6 @@ class Board:
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
             positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100)]
-            # image = load_image(f"пелена.png")
-            # screen.blit(image, (0, 0)
             image = load_image(f"кнопка_б.png")
             screen.blit(image, (250, 487))
             for el in positive:
@@ -113,7 +111,7 @@ class Board:
         if cell:
             pygame.image.save(screen, "data\\screenshot.png")
             im = Image.open("data\\screenshot.png")
-            im2 = im.filter(ImageFilter.GaussianBlur(radius=5))
+            im2 = im.filter(ImageFilter.GaussianBlur(radius=3))
             im2.save('data\\screenshot.png')
             im3 = load_image('screenshot.png')
             screen.blit(im3, (0, 0))
@@ -123,7 +121,6 @@ class Board:
             '''Peshka(all_sprites)
             all_sprites.draw(screen)
             all_sprites.update()'''
-
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
