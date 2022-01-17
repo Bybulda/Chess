@@ -77,6 +77,9 @@ class Board:
         return rowi, coli
 
     def on_click(self, cell):
+        '''if cell:
+            image = load_image(f"пелена.png")
+            screen.blit(image, (0, 0))'''
         pass
 
     def get_click(self, mouse_pos):
