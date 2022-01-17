@@ -1,7 +1,7 @@
 import pygame
 from Appear import sprit, fonte, load_image
 import random
-
+from PIL import Image, ImageFilter
 
 all_sprites = pygame.sprite.Group()
 
@@ -109,7 +109,15 @@ class Board:
         return rowi, coli
 
     def on_click(self, cell):
-        '''if cell:
+        if cell:
+            '''pygame.image.save(screen, "data\\screenshot.png")
+            im = Image.open("data\\screenshot.png")
+            im2 = im.filter(ImageFilter.GaussianBlur(radius=10))
+            im2.save('data\\screenshot.png')
+            im3 = load_image('screenshot.png')
+            screen.blit(im3, (0, 0))
+            pygame.display.flip()
+
             Peshka(all_sprites)
             all_sprites.draw(screen)
             all_sprites.update()'''
