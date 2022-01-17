@@ -122,6 +122,7 @@ class Board:
             all_sprites.draw(screen)
             all_sprites.update()'''
 
+
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
         if cell:
