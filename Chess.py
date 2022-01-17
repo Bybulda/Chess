@@ -79,6 +79,7 @@ class Board:
 
     def on_click(self, cell):
         pass
+    #hjgjhghjgjgjgjh
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
