@@ -2,6 +2,7 @@ import pygame
 from Appear import sprit, fonte, load_image
 import random
 from PIL import Image, ImageFilter
+import time
 
 all_sprites = pygame.sprite.Group()
 
@@ -110,15 +111,16 @@ class Board:
 
     def on_click(self, cell):
         if cell:
-            '''pygame.image.save(screen, "data\\screenshot.png")
+            pygame.image.save(screen, "data\\screenshot.png")
             im = Image.open("data\\screenshot.png")
-            im2 = im.filter(ImageFilter.GaussianBlur(radius=10))
+            im2 = im.filter(ImageFilter.GaussianBlur(radius=5))
             im2.save('data\\screenshot.png')
             im3 = load_image('screenshot.png')
             screen.blit(im3, (0, 0))
             pygame.display.flip()
+            time.sleep(3)
 
-            Peshka(all_sprites)
+            '''Peshka(all_sprites)
             all_sprites.draw(screen)
             all_sprites.update()'''
 
