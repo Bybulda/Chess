@@ -53,8 +53,6 @@ class Board:
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
             positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100),
                         ]
-            # image = load_image(f"пелена.png")
-            # screen.blit(image, (0, 0))
             image = load_image(f"кнопка_б.png")
             screen.blit(image, (250, 487))
             for el in positive:
