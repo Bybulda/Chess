@@ -1,23 +1,7 @@
 import pygame
 import os
 import sys
-
-
-def load_image(name, colorkey=None):
-    fullname = os.path.join('data', name)
-    # если файл не существует, то выходим
-    if not os.path.isfile(fullname):
-        print(f"Файл с изображением '{fullname}' не найден")
-        sys.exit()
-    image = pygame.image.load(fullname)
-    if colorkey is not None:
-        image = image.convert()
-        if colorkey == -1:
-            colorkey = image.get_at((0, 0))
-        image.set_colorkey(colorkey)
-    else:
-        image = image.convert_alpha()
-    return image
+from Appear import sprit, fonte, load_image
 
 
 class Board:
@@ -41,30 +25,11 @@ class Board:
         self.top = top
         self.cell_size = cell_size
 
-    def fonter(self, word, x, y, fint, color):
-        text = fint.render(f'{word}', True, color)
-        screen.blit(text, (x, y))
-
-    def sprite(self):
-        xch, ych, yb = 50, 190, 790
-        # for i in sorted(self.figures.keys()):
-        for i in self.figures.keys():
-            image1 = load_image(f"{i}.png")
-            screen.blit(image1, (xch, ych))
-            image2 = load_image(f"{i}_ч.png")
-            screen.blit(image2, (xch, yb))
-            xch += 140
-            for j in self.figures[i]:
-                image = load_image(f"{i}.png")
-                screen.blit(image, j)
-                image = load_image(f"{i}_ч.png")
-                screen.blit(image, (j[0], 140 if j[1] == 840 else 240))
-
     def render(self, surface):
         n = 8
         strk = 'ABCDEFGH'
         for i in range(len(self.board)):
-            self.fonter(n, 930, self.top + self.cell_size * i + 40, font, 'white')
+            fonte(self, n, 930, self.top + self.cell_size * i + 40, font, 'white')
             n -= 1
             for j in range(len(self.board[i])):
                 brdlt = 25 if i == 0 and j == 0 else -1
@@ -80,7 +45,7 @@ class Board:
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
                 if i == 0:
-                    self.fonter(strk[j], self.left + self.cell_size * j + 40, 110, font, 'white')
+                    fonte(self, strk[j], self.left + self.cell_size * j + 40, 110, font, 'white')
                 if i % 2 == 1 and j % 2 == 0 or j % 2 == 1 and i % 2 == 0:
                     pygame.draw.rect(surface, (60, 170, 60),
                                      (self.left + self.cell_size * j,
@@ -103,7 +68,7 @@ class Board:
             for il in range(290, 691, 400):
                 image = load_image(f"палка.png")
                 screen.blit(image, (50, il))
-            self.sprite()
+            sprit(self)
 
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
