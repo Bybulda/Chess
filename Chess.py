@@ -16,9 +16,6 @@ class Board:
         self.figures = {'пешка': [(i, 740) for i in range(950, 1651, 100)], 'ладья': [(950, 840), (1650, 840)],
                         'конь': [(1050, 840), (1550, 840)], 'слон': [(1150, 840), (1450, 840)],
                         'королева': [(1250, 840)], 'король': [(1350, 840)]}
-        # self.figures = {'слон': [(1150, 840), (1450, 840)], 'королева': [(1250, 840)],
-        #                         'ладья': [(950, 840), (1650, 840)], 'конь': [(1050, 840), (1550, 840)],
-        #                         'пешка': [(i, 740) for i in range(950, 1651, 100)], 'король': [(1350, 840)]}
 
     def set_view(self, left, top, cell_size):
         self.left = left
@@ -56,8 +53,8 @@ class Board:
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
             positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100),
                         ]
-            # image = load_image(f"кнопка_б.png")
-            # screen.blit(image, (200, 487))
+            # image = load_image(f"пелена.png")
+            # screen.blit(image, (0, 0))
             image = load_image(f"кнопка_б.png")
             screen.blit(image, (250, 487))
             for el in positive:

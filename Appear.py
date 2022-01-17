@@ -5,6 +5,7 @@ import sys
 
 screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
 
+
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
     # если файл не существует, то выходим
@@ -21,13 +22,14 @@ def load_image(name, colorkey=None):
         image = image.convert_alpha()
     return image
 
+
 def fonte(self, word, x, y, fint, color):
     text = fint.render(f'{word}', True, color)
     screen.blit(text, (x, y))
 
+
 def sprit(self):
     xch, ych, yb = 50, 190, 790
-    # for i in sorted(self.figures.keys()):
     for i in self.figures.keys():
         image1 = load_image(f"{i}.png")
         screen.blit(image1, (xch, ych))
