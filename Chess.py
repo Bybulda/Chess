@@ -1,6 +1,4 @@
 import pygame
-import os
-import sys
 from Appear import sprit, fonte, load_image
 
 
@@ -51,8 +49,7 @@ class Board:
                                       self.cell_size),
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
-            positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100),
-                        ]
+            positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100)]
             # image = load_image(f"пелена.png")
             # screen.blit(image, (0, 0)
             image = load_image(f"кнопка_б.png")
