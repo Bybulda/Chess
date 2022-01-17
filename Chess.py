@@ -1,5 +1,37 @@
 import pygame
 from Appear import sprit, fonte, load_image
+import random
+
+
+all_sprites = pygame.sprite.Group()
+
+'''for i in range(950, 1651, 100):
+    sprite = pygame.sprite.Sprite()
+    # определим его вид
+    sprite.image = load_image("пешка.png")
+    # и размеры
+    sprite.rect = sprite.image.get_rect()
+    # добавим спрайт в группу
+    sprite.rect.x = i
+    sprite.rect.y = 740
+    all_sprites.add(sprite)'''
+
+
+'''class Peshka(pygame.sprite.Sprite):
+    image = load_image("пешка.png")
+
+    def __init__(self, *group):
+        # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
+        # Это очень важно!!!
+        super().__init__(*group)
+        self.image = Peshka.image
+        self.rect = self.image.get_rect()
+        self.rect.x = 100
+        self.rect.y = 100
+
+    def update(self):
+        self.rect = self.rect.move(random.randrange(3) - 1,
+                                   random.randrange(3) - 1)'''
 
 
 class Board:
@@ -78,9 +110,10 @@ class Board:
 
     def on_click(self, cell):
         '''if cell:
-            image = load_image(f"пелена.png")
-            screen.blit(image, (0, 0))'''
-        pass
+            Peshka(all_sprites)
+            all_sprites.draw(screen)
+            all_sprites.update()'''
+
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
