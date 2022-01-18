@@ -35,8 +35,3 @@ def sprit(self):
         image2 = load_image(f"{i}_ч.png")
         screen.blit(image2, (xch, yb))
         xch += 140
-        for j in self.figures[i]:
-            image = load_image(f"{i}.png")
-            screen.blit(image, j)
-            image = load_image(f"{i}_ч.png")
-            screen.blit(image, (j[0], 140 if j[1] == 840 else 240))

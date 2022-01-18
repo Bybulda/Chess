@@ -1,37 +1,14 @@
 import pygame
 from Appear import sprit, fonte, load_image
-import random
 from Button import Button
+import Peshka
+import Horse
+import King
+import Quenn
+import lad
+import ele
 
-all_sprites = pygame.sprite.Group()
-
-for i in range(950, 1651, 100):
-    sprite = pygame.sprite.Sprite()
-    # определим его вид
-    sprite.image = load_image("пешка.png")
-    # и размеры
-    sprite.rect = sprite.image.get_rect()
-    # добавим спрайт в группу
-    sprite.rect.x = i
-    sprite.rect.y = 740
-    all_sprites.add(sprite)
-
-
-class Peshka(pygame.sprite.Sprite):
-    image = load_image("пешка.png")
-
-    def __init__(self, *group):
-        # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
-        # Это очень важно!!!
-        super().__init__(*group)
-        self.image = Peshka.image
-        self.rect = self.image.get_rect()
-        self.rect.x = 100
-        self.rect.y = 100
-
-    def update(self):
-        self.rect = self.rect.move(random.randrange(3) - 1,
-                                   random.randrange(3) - 1)
+n = 0
 
 
 class Board:
@@ -51,46 +28,6 @@ class Board:
         self.left = left
         self.top = top
         self.cell_size = cell_size
-
-    def render(self, surface):
-        n = 8
-        strk = 'ABCDEFGH'
-        for i in range(len(self.board)):
-            fonte(self, n, 930, self.top + self.cell_size * i + 40, font, 'white')
-            n -= 1
-            for j in range(len(self.board[i])):
-                brdlt = 25 if i == 0 and j == 0 else -1
-                brdrt = 25 if i == 0 and j == 7 else -1
-                brdll = 25 if i == 7 and j == 0 else -1
-                brdlr = 25 if i == 7 and j == 7 else -1
-                if i % 2 == 0 and j % 2 == 0 or j % 2 == 1 and i % 2 == 1:
-                    pygame.draw.rect(surface, (255, 235, 205),
-                                     (self.left + self.cell_size * j,
-                                      self.top + self.cell_size * i,
-                                      self.cell_size,
-                                      self.cell_size),
-                                     0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
-                                     border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
-                if i == 0:
-                    fonte(self, strk[j], self.left + self.cell_size * j + 40, 110, font, 'white')
-                if i % 2 == 1 and j % 2 == 0 or j % 2 == 1 and i % 2 == 0:
-                    pygame.draw.rect(surface, (60, 170, 60),
-                                     (self.left + self.cell_size * j,
-                                      self.top + self.cell_size * i,
-                                      self.cell_size,
-                                      self.cell_size),
-                                     0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
-                                     border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
-            positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100)]
-            for el in positive:
-                pygame.draw.rect(surface, (54, 48, 48),
-                                 el,
-                                 0, border_top_left_radius=25, border_top_right_radius=25,
-                                 border_bottom_left_radius=25, border_bottom_right_radius=25)
-            for il in range(290, 691, 400):
-                image = load_image(f"палка.png")
-                screen.blit(image, (50, il))
-            sprit(self)
 
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
@@ -116,16 +53,52 @@ class Board:
             time.sleep(3)
             # all_sprites.update()
             pygame.display.flip()'''
-            for keys, values in self.figures.items():
-                for val in range(len(self.figures[keys])):
-                    if self.figures[keys][val] == ((cell[1]) * 100 + 950, (cell[0]) * 100 + 140):
-                        self.figures[keys][val] = ((cell[1]) * 100 + 950, (cell[0]) * 100 + 140 - 100)
-
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
         if cell:
             self.on_click(cell)
+
+    def render(self, surface, b=0):
+        n = 8
+        strk = 'ABCDEFGH'
+        for i in range(len(self.board)):
+            fonte(self, n, 930, self.top + self.cell_size * i + 40, font, 'white')
+            n -= 1
+            for j in range(len(self.board[i])):
+                brdlt = 25 if i == 0 and j == 0 else -1
+                brdrt = 25 if i == 0 and j == 7 else -1
+                brdll = 25 if i == 7 and j == 0 else -1
+                brdlr = 25 if i == 7 and j == 7 else -1
+                if i == 0:
+                    fonte(self, strk[j], self.left + self.cell_size * j + 40, 110, font, 'white')
+                if b == 0:
+                    if i % 2 == 0 and j % 2 == 0 or j % 2 == 1 and i % 2 == 1:
+                        pygame.draw.rect(surface, (255, 235, 205),
+                                         (self.left + self.cell_size * j,
+                                          self.top + self.cell_size * i,
+                                          self.cell_size,
+                                          self.cell_size),
+                                         0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
+                                         border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
+                    else:
+                        pygame.draw.rect(surface, (60, 170, 60),
+                                         (self.left + self.cell_size * j,
+                                          self.top + self.cell_size * i,
+                                          self.cell_size,
+                                          self.cell_size),
+                                         0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
+                                         border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
+            positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100)]
+            for el in positive:
+                pygame.draw.rect(surface, (54, 48, 48),
+                                 el,
+                                 0, border_top_left_radius=25, border_top_right_radius=25,
+                                 border_bottom_left_radius=25, border_bottom_right_radius=25)
+            for il in range(290, 691, 400):
+                image = load_image(f"палка.png")
+                screen.blit(image, (50, il))
+            sprit(self)
 
 
 pygame.init()
@@ -136,7 +109,7 @@ running = True
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 40)
 scetch = pygame.font.SysFont('arial', 20)
-Peshka(all_sprites)
+
 
 while running:
     clock.tick(60)
@@ -151,6 +124,17 @@ while running:
     screen.fill((64, 58, 58))
     board.render(screen)
     Button(250, 487).update(*f)
-    Peshka(all_sprites).update()
+    Peshka.all_sprites.draw(screen)
+    Peshka.all_sprites.update()
+    Horse.all_sprites.draw(screen)
+    Horse.all_sprites.update()
+    King.all_sprites.draw(screen)
+    King.all_sprites.update()
+    Quenn.all_sprites.draw(screen)
+    Quenn.all_sprites.update()
+    lad.all_sprites.draw(screen)
+    lad.all_sprites.update()
+    ele.all_sprites.draw(screen)
+    ele.all_sprites.update()
     pygame.display.flip()
 

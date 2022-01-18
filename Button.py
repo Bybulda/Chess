@@ -12,8 +12,5 @@ class Button:
         global c
         if 300 >= x >= self.x and self.y <= y <= 587:
             c = (c + 1) % 2
-            im = Appear.load_image(variab[c])
-            Appear.screen.blit(im, (self.x, self.y))
-        else:
-            im = Appear.load_image(variab[c])
-            Appear.screen.blit(im, (self.x, self.y))
+        im = Appear.load_image(variab[c])
+        Appear.screen.blit(im, (self.x, self.y))
