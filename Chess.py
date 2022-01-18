@@ -124,7 +124,8 @@ class Board:
             # all_sprites.update()
             pygame.display.flip()'''
         if cell == -1:
-            Button(250, 487).update(250, 487)
+            # Button(250, 487).update(250, 487)
+            pass
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
@@ -152,4 +153,5 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             board.get_click(event.pos)
+            Button(250, 487).update(*event.pos)
     pygame.display.flip()

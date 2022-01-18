@@ -1,4 +1,3 @@
-import pygame
 import Appear
 
 
@@ -12,6 +11,9 @@ class Button:
     def update(self, x, y):
         global c
         if 300 >= x >= self.x and self.y <= y <= 587:
+            im = Appear.load_image(variab[c])
+            im.fill((54, 48, 48))
+            Appear.screen.blit(im, (self.x, self.y))
             im = Appear.load_image(variab[c])
             Appear.screen.blit(im, (self.x, self.y))
             c = (c + 1) % 2
