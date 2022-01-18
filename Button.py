@@ -17,4 +17,3 @@ class Button:
             im = Appear.load_image(variab[c])
             Appear.screen.blit(im, (self.x, self.y))
             c = (c + 1) % 2
-

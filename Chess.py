@@ -98,9 +98,6 @@ class Board:
 
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
-        if 300 >= mouse_pos[0] >= 250 and 487 <= mouse_pos[1] <= 587:
-            print(-1)
-            return -1
         if posx <= 0 or posy <= 0:
             return None
         if posx % self.cell_size == 0 or posy % self.cell_size == 0:
@@ -123,9 +120,6 @@ class Board:
             time.sleep(3)
             # all_sprites.update()
             pygame.display.flip()'''
-        if cell == -1:
-            # Button(250, 487).update(250, 487)
-            pass
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
