@@ -16,3 +16,10 @@ class Quen(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = position[0]
         self.rect.y = position[1]
+
+    def update(self):
+        pass
+
+
+Quen('white', (1250, 840), all_sprites)
+Quen('b', (1250, 140), all_sprites)
