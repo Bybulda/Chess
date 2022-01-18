@@ -3,10 +3,11 @@ from Appear import sprit, fonte, load_image
 import random
 from PIL import Image, ImageFilter
 import time
+from Button import Button
 
 all_sprites = pygame.sprite.Group()
 
-'''for i in range(950, 1651, 100):
+for i in range(950, 1651, 100):
     sprite = pygame.sprite.Sprite()
     # определим его вид
     sprite.image = load_image("пешка.png")
@@ -15,10 +16,10 @@ all_sprites = pygame.sprite.Group()
     # добавим спрайт в группу
     sprite.rect.x = i
     sprite.rect.y = 740
-    all_sprites.add(sprite)'''
+    all_sprites.add(sprite)
 
 
-'''class Peshka(pygame.sprite.Sprite):
+class Peshka(pygame.sprite.Sprite):
     image = load_image("пешка.png")
 
     def __init__(self, *group):
@@ -32,7 +33,7 @@ all_sprites = pygame.sprite.Group()
 
     def update(self):
         self.rect = self.rect.move(random.randrange(3) - 1,
-                                   random.randrange(3) - 1)'''
+                                   random.randrange(3) - 1)
 
 
 class Board:
@@ -97,6 +98,9 @@ class Board:
 
     def get_cell(self, mouse_pos):
         posx, posy = mouse_pos[0] - self.left, mouse_pos[1] - self.top
+        if 300 >= mouse_pos[0] >= 250 and 487 <= mouse_pos[1] <= 587:
+            print(-1)
+            return -1
         if posx <= 0 or posy <= 0:
             return None
         if posx % self.cell_size == 0 or posy % self.cell_size == 0:
@@ -108,8 +112,8 @@ class Board:
         return rowi, coli
 
     def on_click(self, cell):
-        if cell:
-            pygame.image.save(screen, "data\\screenshot.png")
+        if cell != -1 and cell != None:
+            '''pygame.image.save(screen, "data\\screenshot.png")
             im = Image.open("data\\screenshot.png")
             im2 = im.filter(ImageFilter.GaussianBlur(radius=3))
             im2.save('data\\screenshot.png')
@@ -117,11 +121,10 @@ class Board:
             screen.blit(im3, (0, 0))
             pygame.display.flip()
             time.sleep(3)
-
-            '''Peshka(all_sprites)
-            all_sprites.draw(screen)
-            all_sprites.update()'''
-
+            # all_sprites.update()
+            pygame.display.flip()'''
+        if cell == -1:
+            Button(250, 487).update(250, 487)
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
@@ -137,14 +140,16 @@ running = True
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 40)
 scetch = pygame.font.SysFont('arial', 20)
+Peshka(all_sprites)
+all_sprites.draw(screen)
+screen.fill((64, 58, 58))
+board.render(screen)
 
 while running:
-    clock.tick(10)
+    clock.tick(60)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             board.get_click(event.pos)
-    screen.fill((64, 58, 58))
-    board.render(screen)
     pygame.display.flip()
