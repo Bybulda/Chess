@@ -116,6 +116,11 @@ class Board:
             time.sleep(3)
             # all_sprites.update()
             pygame.display.flip()'''
+            for keys, values in self.figures.items():
+                for val in range(len(self.figures[keys])):
+                    if self.figures[keys][val] == ((cell[1]) * 100 + 950, (cell[0]) * 100 + 140):
+                        self.figures[keys][val] = ((cell[1]) * 100 + 950, (cell[0]) * 100 + 140 - 100)
+
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
