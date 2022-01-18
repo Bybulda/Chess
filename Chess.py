@@ -1,8 +1,6 @@
 import pygame
 from Appear import sprit, fonte, load_image
 import random
-from PIL import Image, ImageFilter
-import time
 from Button import Button
 
 all_sprites = pygame.sprite.Group()
@@ -84,8 +82,6 @@ class Board:
                                      0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                      border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
             positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100)]
-            image = load_image(f"кнопка_б.png")
-            screen.blit(image, (250, 487))
             for el in positive:
                 pygame.draw.rect(surface, (54, 48, 48),
                                  el,
@@ -136,16 +132,20 @@ clock = pygame.time.Clock()
 font = pygame.font.Font(None, 40)
 scetch = pygame.font.SysFont('arial', 20)
 Peshka(all_sprites)
-all_sprites.draw(screen)
-screen.fill((64, 58, 58))
-board.render(screen)
 
 while running:
     clock.tick(60)
+    f = [0, 0]
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             board.get_click(event.pos)
-            Button(250, 487).update(*event.pos)
+            f[0], f[1] = event.pos[0], event.pos[1]
+
+    screen.fill((64, 58, 58))
+    board.render(screen)
+    Button(250, 487).update(*f)
+    Peshka(all_sprites).update()
     pygame.display.flip()
+

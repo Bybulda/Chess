@@ -2,7 +2,7 @@ import Appear
 
 
 variab = ['кнопка_б.png', 'кнопка_ч.png']
-c = 1
+c = 0
 
 class Button:
     def __init__(self, x, y):
@@ -11,9 +11,9 @@ class Button:
     def update(self, x, y):
         global c
         if 300 >= x >= self.x and self.y <= y <= 587:
-            im = Appear.load_image(variab[c])
-            im.fill((64, 58, 58))
-            Appear.screen.blit(im, (self.x, self.y))
-            im = Appear.load_image(variab[c])
-            Appear.screen.blit(im, (self.x, self.y))
             c = (c + 1) % 2
+            im = Appear.load_image(variab[c])
+            Appear.screen.blit(im, (self.x, self.y))
+        else:
+            im = Appear.load_image(variab[c])
+            Appear.screen.blit(im, (self.x, self.y))
