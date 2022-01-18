@@ -16,3 +16,11 @@ class Kon(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = position[0]
         self.rect.y = position[1]
+
+    def update(self):
+        pass
+
+
+for i in range(1050, 1551, 500):
+    Kon('white', (i, 840), all_sprites)
+    Kon('b', (i, 140), all_sprites)
