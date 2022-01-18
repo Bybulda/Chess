@@ -4,6 +4,7 @@ import Appear
 variab = ['кнопка_б.png', 'кнопка_ч.png']
 c = 0
 
+
 class Button:
     def __init__(self, x, y):
         self.x, self.y = x, y
