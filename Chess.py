@@ -1,14 +1,19 @@
 import pygame
 from Appear import sprit, fonte, load_image
 from Button import Button
-import Peshka
-import Horse
-import King
-import Quenn
-import lad
-import ele
+
 
 n = 0
+pole = [['ладья_ч.png', 'конь_ч.png', 'слон_ч.png', 'королева_ч.png', 'король_ч.png', 'слон_ч.png', 'конь_ч.png',
+         'ладья_ч.png'],
+        ['пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png',
+         'пешка_ч.png'],
+        ['-', '-', '-', '-', '-', '-', '-', '-'],
+        ['-', '-', '-', '-', '-', '-', '-', '-'],
+        ['-', '-', '-', '-', '-', '-', '-', '-'],
+        ['-', '-', '-', '-', '-', '-', '-', '-'],
+        ['пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png'],
+        ['ладья.png', 'конь.png', 'слон.png', 'королева.png', 'король.png', 'слон.png', 'конь.png', 'ладья.png']]
 
 
 class Board:
@@ -70,6 +75,7 @@ class Board:
                 brdrt = 25 if i == 0 and j == 7 else -1
                 brdll = 25 if i == 7 and j == 0 else -1
                 brdlr = 25 if i == 7 and j == 7 else -1
+                state = True if pole[i][j] != '-' else False
                 if i == 0:
                     fonte(self, strk[j], self.left + self.cell_size * j + 40, 110, font, 'white')
                 if b == 0:
@@ -89,6 +95,9 @@ class Board:
                                           self.cell_size),
                                          0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                          border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
+                    if state:
+                        im = load_image(pole[i][j])
+                        screen.blit(im, (self.left + self.cell_size * j, self.top + self.cell_size * i))
             positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100)]
             for el in positive:
                 pygame.draw.rect(surface, (54, 48, 48),
@@ -124,17 +133,5 @@ while running:
     screen.fill((64, 58, 58))
     board.render(screen)
     Button(250, 487).update(*f)
-    Peshka.all_sprites.draw(screen)
-    Peshka.all_sprites.update()
-    Horse.all_sprites.draw(screen)
-    Horse.all_sprites.update()
-    King.all_sprites.draw(screen)
-    King.all_sprites.update()
-    Quenn.all_sprites.draw(screen)
-    Quenn.all_sprites.update()
-    lad.all_sprites.draw(screen)
-    lad.all_sprites.update()
-    ele.all_sprites.draw(screen)
-    ele.all_sprites.update()
     pygame.display.flip()
 
