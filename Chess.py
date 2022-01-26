@@ -7,9 +7,10 @@ import Config
 
 n = 0
 poll = deepcopy(Config.pole)
+print(poll[6][0])
 
 
-def stater(x, y): return poll[x][y] != '-'
+def stater(x, y): return poll[x][y] != '-' and poll[x][y] != '*'
 
 class Board:
     def __init__(self, width, height):
@@ -20,9 +21,6 @@ class Board:
         self.top = 10
         self.cell_size = 30
         self.cl = 0
-        self.figures = {'пешка': [(i, 740) for i in range(950, 1651, 100)], 'ладья': [(950, 840), (1650, 840)],
-                        'конь': [(1050, 840), (1550, 840)], 'слон': [(1150, 840), (1450, 840)],
-                        'королева': [(1250, 840)], 'король': [(1350, 840)]}
 
     def set_view(self, left, top, cell_size):
         self.left = left
@@ -39,20 +37,16 @@ class Board:
             return None
         coli = posx // self.cell_size
         rowi = posy // self.cell_size
-        return rowi, coli
+        return (coli, rowi)
 
     def on_click(self, cell):
-        if cell != -1 and cell != None:
-            '''pygame.image.save(screen, "data\\screenshot.png")
-            im = Image.open("data\\screenshot.png")
-            im2 = im.filter(ImageFilter.GaussianBlur(radius=3))
-            im2.save('data\\screenshot.png')
-            im3 = load_image('screenshot.png')
-            screen.blit(im3, (0, 0))
-            pygame.display.flip()
-            time.sleep(3)
-            # all_sprites.update()
-            pygame.display.flip()'''
+        x, y = cell[0], cell[1]
+        z = ''
+        if stater(x, y):
+            if poll[x][y] == 'пешка.png':
+                poll[x-1][y], poll[x-2][y] = '*', '*'
+                z = '*'
+        print(x, y, z)
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
@@ -92,6 +86,9 @@ class Board:
                     if stater(i, j):
                         im = load_image(poll[i][j])
                         screen.blit(im, (self.left + self.cell_size * j, self.top + self.cell_size * i))
+                    elif poll[i][j] == '*':
+                        pygame.draw.circle(screen, (179, 179, 0), (self.left + self.cell_size * j + 50,
+                                                                   self.top + self.cell_size * i + 50), 13)
             positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100)]
             for el in positive:
                 pygame.draw.rect(surface, (54, 48, 48),
