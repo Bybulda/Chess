@@ -1,20 +1,15 @@
 import pygame
+from copy import deepcopy
 from Appear import sprit, fonte, load_image
 from Button import Button
+import Config
 
 
 n = 0
-pole = [['ладья_ч.png', 'конь_ч.png', 'слон_ч.png', 'королева_ч.png', 'король_ч.png', 'слон_ч.png', 'конь_ч.png',
-         'ладья_ч.png'],
-        ['пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png',
-         'пешка_ч.png'],
-        ['-', '-', '-', '-', '-', '-', '-', '-'],
-        ['-', '-', '-', '-', '-', '-', '-', '-'],
-        ['-', '-', '-', '-', '-', '-', '-', '-'],
-        ['-', '-', '-', '-', '-', '-', '-', '-'],
-        ['пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png'],
-        ['ладья.png', 'конь.png', 'слон.png', 'королева.png', 'король.png', 'слон.png', 'конь.png', 'ладья.png']]
+poll = deepcopy(Config.pole)
 
+
+def stater(x, y): return poll[x][y] != '-'
 
 class Board:
     def __init__(self, width, height):
@@ -75,7 +70,6 @@ class Board:
                 brdrt = 25 if i == 0 and j == 7 else -1
                 brdll = 25 if i == 7 and j == 0 else -1
                 brdlr = 25 if i == 7 and j == 7 else -1
-                state = True if pole[i][j] != '-' else False
                 if i == 0:
                     fonte(self, strk[j], self.left + self.cell_size * j + 40, 110, font, 'white')
                 if b == 0:
@@ -95,8 +89,8 @@ class Board:
                                           self.cell_size),
                                          0, border_top_left_radius=brdlt, border_top_right_radius=brdrt,
                                          border_bottom_left_radius=brdll, border_bottom_right_radius=brdlr)
-                    if state:
-                        im = load_image(pole[i][j])
+                    if stater(i, j):
+                        im = load_image(poll[i][j])
                         screen.blit(im, (self.left + self.cell_size * j, self.top + self.cell_size * i))
             positive = [(50, 187, 800, 105), (50, 787, 800, 105), (350, 387, 200, 100), (350, 587, 200, 100)]
             for el in positive:
