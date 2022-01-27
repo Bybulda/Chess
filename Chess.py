@@ -8,6 +8,8 @@ import keyboard
 
 poll = deepcopy(Config.pole)
 positive = deepcopy(Config.positive)
+start = 1
+end = 0
 
 
 def stater(x, y): return poll[x][y] != '-'
@@ -85,6 +87,9 @@ class Board:
         x, y = cell
         z = ''
         if stater(x, y):
+            if poll[x][y] == '*':
+                poll[x][y] = poll[x+1][y]
+                poll[x+1][y] = '-'
             cleaner()
             if poll[x][y] == 'пешка.png':
                 poll[x-1][y], poll[x-2][y] = '*', '*'
@@ -118,7 +123,13 @@ while running:
     if not running:
         pygame.quit()
     else:
-        screen.fill((64, 58, 58))
-        board.render(screen)
-        Button.all_sprites.draw(screen)
-        pygame.display.flip()
+        if keyboard.is_pressed('space'):
+            start = 0
+        if start:
+            screen.blit(load_image('меню_старт.png'), (0, 0))
+            pygame.display.flip()
+        else:
+            screen.fill((64, 58, 58))
+            board.render(screen)
+            Button.all_sprites.draw(screen)
+            pygame.display.flip()
