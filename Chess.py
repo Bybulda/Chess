@@ -12,6 +12,7 @@ print(poll[6][0])
 
 def stater(x, y): return poll[x][y] != '-' and poll[x][y] != '*'
 
+
 class Board:
     def __init__(self, width, height):
         self.width = width
