@@ -5,6 +5,8 @@ import sys
 
 screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
 
+figures = ['пешка', 'ладья', 'конь', 'слон', 'королева', 'король']
+
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -29,7 +31,7 @@ def fonte(self, word, x, y, fint, color):
 
 def sprit(self):
     xch, ych, yb = 50, 190, 790
-    for i in self.figures.keys():
+    for i in figures:
         image1 = load_image(f"{i}.png")
         screen.blit(image1, (xch, ych))
         image2 = load_image(f"{i}_ч.png")
