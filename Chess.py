@@ -4,6 +4,7 @@ from Appear import sprit, fonte, load_image
 import Config
 import Button
 import keyboard
+import os
 
 
 poll = deepcopy(Config.pole)
@@ -34,7 +35,7 @@ class Board:
 
     def render(self, surface):
         for i in range(len(self.board)):
-            fonte(8 - i % 8, 930, self.top + self.cell_size * i + 40, font, 'white')
+            fonte(8 - i % 8, 930, self.top + self.cell_size * i + 40, font, (255, 235, 205))
             for j in range(len(self.board[i])):
                 brdlt = 25 if i == 0 and j == 0 else -1
                 brdrt = 25 if i == 0 and j == 7 else -1
@@ -42,7 +43,7 @@ class Board:
                 brdlr = 25 if i == 7 and j == 7 else -1
                 cmd = (255, 235, 205) if i % 2 == 0 and j % 2 == 0 or j % 2 == 1 and i % 2 == 1 else (60, 170, 60)
                 if i == 0:
-                    fonte(chr(65 + j % 8), self.left + self.cell_size * j + 40, 110, font, 'white')
+                    fonte(chr(65 + j % 8), self.left + self.cell_size * j + 40, 110, font, (255, 235, 205))
                 pygame.draw.rect(surface, cmd,
                                  (self.left + self.cell_size * j, self.top + self.cell_size * i, self.cell_size,
                                   self.cell_size),
@@ -53,7 +54,7 @@ class Board:
                     im = load_image(poll[i][j])
                     screen.blit(im, (self.left + self.cell_size * j, self.top + self.cell_size * i))
                 elif poll[i][j] == '*':
-                    pygame.draw.circle(screen, (179, 179, 0), (self.left + self.cell_size * j + 50,
+                    pygame.draw.circle(screen, (177, 231, 42), (self.left + self.cell_size * j + 50,
                                                                self.top + self.cell_size * i + 50), 20)
         screen.blit(load_image('эмблема.png'), (400, 487))
         for el in positive:
@@ -109,14 +110,15 @@ board.set_view(950, 140, 100)
 running = True
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 40)
-scetch = pygame.font.SysFont('arial', 20)
+numfig = pygame.font.SysFont('arial', 20)
+Menuf = pygame.font.Font(os.path.join('Data0', 'Leto Text Sans Defect.otf'), 60)
 
 while running:
-    clock.tick(60)
+    clock.tick(30)
     for event in pygame.event.get():
         if event.type == pygame.QUIT or keyboard.is_pressed('escape'):
             running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and not start:
             board.get_click(event.pos)
             Button.all_sprites.update(event)
 
@@ -127,9 +129,9 @@ while running:
             start = 0
         if start:
             screen.blit(load_image('меню_старт.png'), (0, 0))
-            pygame.display.flip()
+            fonte('EXIT', 370, 820, Menuf)
         else:
             screen.fill((64, 58, 58))
             board.render(screen)
             Button.all_sprites.draw(screen)
-            pygame.display.flip()
+        pygame.display.flip()

@@ -24,7 +24,7 @@ def load_image(name, colorkey=None):
     return image
 
 
-def fonte(word, x, y, fint, color):
+def fonte(word, x, y, fint, color=(255, 235, 205)):
     text = fint.render(f'{word}', True, color)
     screen.blit(text, (x, y))
 

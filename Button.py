@@ -20,6 +20,10 @@ class Buttony(pygame.sprite.Sprite):
                 self.rect.collidepoint(args[0].pos):
             if self.image == self.imbel:
                 self.image = self.imch
+                return 'b'
             else:
                 self.image = self.imbel
+                return 'w'
+
+
 Buttony(all_sprites)
