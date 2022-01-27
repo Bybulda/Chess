@@ -24,12 +24,12 @@ def load_image(name, colorkey=None):
     return image
 
 
-def fonte(self, word, x, y, fint, color):
+def fonte(word, x, y, fint, color):
     text = fint.render(f'{word}', True, color)
     screen.blit(text, (x, y))
 
 
-def sprit(self):
+def sprit():
     xch, ych, yb = 50, 190, 790
     for i in figures:
         image1 = load_image(f"{i}.png")
