@@ -111,7 +111,7 @@ running = True
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 40)
 numfig = pygame.font.SysFont('arial', 20)
-Menuf = pygame.font.Font(os.path.join('Data0', 'Leto Text Sans Defect.otf'), 60)
+Menuf = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 60)
 
 while running:
     clock.tick(30)
