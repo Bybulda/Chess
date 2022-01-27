@@ -1,17 +1,20 @@
+import pygame
 import Appear
 
+all_sprites = pygame.sprite.Group()
 
-variab = ['кнопка_б.png', 'кнопка_ч.png']
-c = 0
+class Buttony(pygame.sprite.Sprite):
+    imbel = Appear.load_image('кнопка_б.png')
+    imch = Appear.load_image('кнопка_ч.png')
 
+    def __init__(self, group=all_sprites):
+        super().__init__(group)
+        self.image = Buttony.imbel
+        self.rect = self.image.get_rect()
+        self.rect.x = 250
+        self.rect.y = 487
 
-class Button:
-    def __init__(self, x, y):
-        self.x, self.y = x, y
-
-    def update(self, x, y):
-        global c
-        if 300 >= x >= self.x and self.y <= y <= 587:
-            c = (c + 1) % 2
-        im = Appear.load_image(variab[c])
-        Appear.screen.blit(im, (self.x, self.y))
+    def update(self, *args):
+        if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
+                self.rect.collidepoint(args[0].pos):
+            self.image = self.imch
