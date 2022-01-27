@@ -38,6 +38,7 @@ class Buttony(pygame.sprite.Sprite):
                 self.rect.collidepoint(args[0].pos):
             self.image = self.imch
 
+
 class Board:
     def __init__(self, width, height):
         self.width = width
