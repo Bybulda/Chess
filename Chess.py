@@ -9,11 +9,20 @@ import os
 
 poll = deepcopy(Config.pole)
 positive = deepcopy(Config.positive)
-start = 1
 end = 0
+start = 1
+# game_set = 'start'
 
 
 def stater(x, y): return poll[x][y] != '-'
+
+
+def get_menu_button(mouse_pos):
+    x, y = mouse_pos
+    if 1296 <= x <= 1716 and 739 <= y <= 943:
+        return 'exit'
+    elif 755 <= x <= 1175 and 739 <= y <= 943 or 213 <= x <= 633 and 739 <= y <= 943:
+        return 'play'
 
 
 def cleaner():
@@ -109,7 +118,7 @@ board = Board(8, 8)
 board.set_view(950, 140, 100)
 running = True
 clock = pygame.time.Clock()
-font = pygame.font.Font(None, 40)
+font = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 30)
 numfig = pygame.font.SysFont('arial', 20)
 Menuf = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 60)
 
@@ -118,18 +127,24 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or keyboard.is_pressed('escape'):
             running = False
-        if event.type == pygame.MOUSEBUTTONDOWN and not start:
-            board.get_click(event.pos)
-            Button.all_sprites.update(event)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if start:
+                if get_menu_button(event.pos) == 'exit':
+                    running = False
+                elif get_menu_button(event.pos) == 'play':
+                    start = 0
+            else:
+                board.get_click(event.pos)
+                Button.all_sprites.update(event)
 
     if not running:
         pygame.quit()
     else:
-        if keyboard.is_pressed('space'):
-            start = 0
         if start:
             screen.blit(load_image('меню_старт.png'), (0, 0))
-            fonte('EXIT', 370, 820, Menuf)
+            fonte('LONG MATCH', 235, 820, Menuf)
+            fonte('FAST MATCH', 780, 820, Menuf)
+            fonte('EXIT GAME', 1350, 820, Menuf)
         else:
             screen.fill((64, 58, 58))
             board.render(screen)
