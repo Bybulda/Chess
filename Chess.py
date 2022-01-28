@@ -30,6 +30,8 @@ def cleaner():
         for j in range(8):
             if poll[i][j] == '*':
                 poll[i][j] = '-'
+            elif 'с_' in poll[i][j]:
+                poll[i][j] = poll[i][j][2::]
 
 
 class Board:
@@ -102,7 +104,12 @@ class Board:
                 poll[x+1][y] = '-'
             cleaner()
             if poll[x][y] == 'пешка.png':
-                poll[x-1][y], poll[x-2][y] = '*', '*'
+                if poll[x-1][y] != '-':
+                    poll[x-1][y] = f'c_{poll[x-1][y]}'
+                elif poll[x-2][y] != '-':
+                    poll[x - 2][y] = f'с_{poll[x-2][y]}'
+                else:
+                    poll[x-1][y], poll[x-2][y] = '*', '*'
                 z = '*'
         print(x, y, z)
 
