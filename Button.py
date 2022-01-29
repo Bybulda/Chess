@@ -14,16 +14,20 @@ class Buttony(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 250
         self.rect.y = 487
+        self.hod = None
 
     def update(self, *args):
         if args and args[0].type == pygame.MOUSEBUTTONDOWN and \
                 self.rect.collidepoint(args[0].pos):
             if self.image == self.imbel:
                 self.image = self.imch
-                return 'b'
+                self.hod = 'b'
             else:
                 self.image = self.imbel
-                return 'w'
+                self.hod = 'w'
+
+    def get_hod(self):
+        return self.hod
 
 
-Buttony(all_sprites)
+button = Buttony(all_sprites)
