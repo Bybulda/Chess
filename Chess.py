@@ -159,8 +159,9 @@ while running:
                 timers[0] -= timedelta(seconds=1)
             if event.type == MYTIMER2:
                 timers[1] -= timedelta(seconds=1)
-            if keyboard.is_pressed('alt'):
+            if keyboard.is_pressed('alt') and end == 0 and start == 0:
                 end = 1
+                ender()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start:
                     if get_menu_button(event.pos) == 'exit':
@@ -188,7 +189,8 @@ while running:
             fonte('FAST MATCH', 780, 820, Menuf)
             fonte('EXIT GAME', 1350, 820, Menuf)
         elif end and not start:
-            ender()
+            screen.blit(load_image('screenshot.png'), (0, 0))
+            screen.blit(load_image('финишное_меню.png'), (565, 246))
         else:
             screen.fill((64, 58, 58))
             board.render(screen)
