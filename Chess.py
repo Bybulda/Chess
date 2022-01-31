@@ -48,7 +48,7 @@ def get_menu_button(mouse_pos):
         return 'short'
     elif 213 <= x <= 633 and 739 <= y <= 943:
         return 'long'
-    elif 639 <= x <= 829 and  593 <= y <= 681:
+    elif 639 <= x <= 829 and 593 <= y <= 681:
         return 'rematch'
 
 
@@ -70,6 +70,7 @@ class Board:
         self.top = 10
         self.cell_size = 30
         self.cl = 0
+        self.ordin = [0]
 
     def render(self, surface):
         for i in range(len(self.board)):
@@ -115,21 +116,12 @@ class Board:
 
     def on_click(self, cell):
         x, y = cell
-        z = ''
-        if stater(x, y):
-            if poll[x][y] == '*':
-                poll[x][y] = poll[x+1][y]
-                poll[x+1][y] = '-'
+        if stater(x, y) and poll[x][y] != '*':
             cleaner()
-            if poll[x][y] == 'пешка.png':
-                if poll[x-1][y] != '-':
-                    poll[x-1][y] = f'c_{poll[x-1][y]}'
-                elif poll[x-2][y] != '-':
-                    poll[x - 2][y] = f'с_{poll[x-2][y]}'
-                else:
-                    poll[x-1][y], poll[x-2][y] = '*', '*'
-                z = '*'
-        print(x, y, z)
+            self.ordin = x, y
+        elif stater(x, y) and poll[x][y] == '*':
+            poll[self.ordin[0]][self.ordin[1]] = poll[x][y]
+            cleaner()
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
