@@ -48,4 +48,3 @@ def sprit():
         screen.blit(image2, (xch, yb))
         xch += 140
     screen.blit(load_image('эмблема.png'), (400, 487))
-
