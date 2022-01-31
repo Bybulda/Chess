@@ -14,7 +14,6 @@ class Table:
             self.color, self.eat = 0, ['-', 'я', 'ь', 'н', 'а']
         elif self.fig[-1] != '-':
             self.color, self.eat = 1, ['-', 'ч']
-        print(self.fig, self.color)
 
     def pawn(self):
         if self.color == 1:
@@ -128,8 +127,66 @@ class Table:
                 break
         return self.moves
 
+    def bishop(self):
+        x = self.x
+        y = self.y
+        self.moves = []
+        while x < 7 and y < 7:
+            if self.boa[y + 1][x + 1].split('.')[0][-1] in self.eat:
+                self.moves.append([y + 1, x + 1])
+                if self.boa[y + 1][x + 1].split('.')[0][-1] != '-':
+                    break
+                x, y = x + 1, y + 1
+            else:
+                break
+        x = self.x
+        y = self.y
+        while x > 0 and y > 0:
+            if self.boa[y - 1][x - 1].split('.')[0][-1] in self.eat:
+                self.moves.append([y - 1, x - 1])
+                if self.boa[y - 1][x - 1].split('.')[0][-1] != '-':
+                    break
+                x, y = x - 1, y - 1
+            else:
+                break
+        x = self.x
+        y = self.y
+        while y > 0 and x < 7:
+            if self.boa[y - 1][x + 1].split('.')[0][-1] in self.eat:
+                self.moves.append([y - 1, x + 1])
+                if self.boa[y - 1][x + 1].split('.')[0][-1] != '-':
+                    break
+                x, y = x + 1, y - 1
+            else:
+                break
+        x = self.x
+        y = self.y
+        while y < 7 and x > 0:
+            if self.boa[y + 1][x - 1].split('.')[0][-1] in self.eat:
+                self.moves.append([y + 1, x - 1])
+                if self.boa[y + 1][x - 1].split('.')[0][-1] != '-':
+                    break
+                x, y = x - 1, y + 1
+            else:
+                break
+        return self.moves
 
-b = [7, 0]
+    def queen(self):
+        self.moves = self.rook()
+        self.moves += self.bishop()
+        return self.moves
+
+
+pole = [['ладья_ч.png', 'конь_ч.png', 'слон_ч.png', 'королева_ч.png', 'король_ч.png', 'слон_ч.png', 'конь_ч.png', 'ладья_ч.png'],
+        ['пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png'],
+        ['-', '-', '-', '-', '-', '-', '-', '-'],
+        ['-', '-', '-', '-', '-', '-', '-', '-'],
+        ['-', '-', '-', '-', 'королева.png', '-', '-', '-'],
+        ['-', '-', '-', '-', '-', '-', '-', '-'],
+        ['слон.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png'],
+        ['ладья.png', 'конь.png', 'слон.png', 'королева.png', 'король.png', 'слон.png', 'конь.png', 'ладья.png']]
+
+b = [4, 4]
 figure, can_moves, proof = Table(), [], pole[b[0]][b[1]].split('.')[0]
 figure.stay(pole, b)
 if proof == 'пешка' or proof == 'пешка_ч':
@@ -140,7 +197,10 @@ elif proof == 'конь' or proof == 'конь_ч':
     can_moves = figure.knight()
 elif proof == 'ладья' or proof == 'ладья_ч':
     can_moves = figure.rook()
-print(can_moves)
+elif proof == 'слон' or proof == 'слон_ч':
+    can_moves = figure.bishop()
+elif proof == 'королева' or proof == 'королева_ч':
+    can_moves = figure.queen()
 if len(can_moves) != 0:
     for i in can_moves:
         if pole[i[0]][i[1]] != '-':
