@@ -1,8 +1,9 @@
 import pygame
 from copy import deepcopy
-from Appear import sprit, fonte, load_image
+from Appear import sprit, fonte, load_image, figures
 import Config
 import Button
+from Logic import Table
 import keyboard
 import os
 from datetime import timedelta
@@ -116,11 +117,43 @@ class Board:
 
     def on_click(self, cell):
         x, y = cell
-        if stater(x, y) and poll[x][y] != '*':
+        if stater(x, y) and poll[x][y] != '*' and poll[x][y][0:2] != 'с_':
             cleaner()
             self.ordin = x, y
-        elif stater(x, y) and poll[x][y] == '*':
-            poll[self.ordin[0]][self.ordin[1]] = poll[x][y]
+            figure, proof = Table(), poll[x][y].split('.')[0]
+            figure.stay(poll, cell)
+            can_moves = []
+            if proof == 'пешка' or proof == 'пешка_ч':
+                can_moves = figure.pawn()
+            elif proof == 'король' or proof == 'король_ч':
+                can_moves = figure.king()
+            elif proof == 'конь' or proof == 'конь_ч':
+                can_moves = figure.knight()
+            elif proof == 'ладья' or proof == 'ладья_ч':
+                can_moves = figure.rook()
+            elif proof == 'слон' or proof == 'слон_ч':
+                can_moves = figure.bishop()
+            elif proof == 'королева' or proof == 'королева_ч':
+                can_moves = figure.queen()
+            if len(can_moves) != 0:
+                for i in can_moves:
+                    if poll[i[0]][i[1]] != '-':
+                        poll[i[0]][i[1]] = 'с_' + poll[i[0]][i[1]]
+                    else:
+                        poll[i[0]][i[1]] = '*'
+        elif stater(x, y) and poll[x][y] == '*' or poll[x][y][0:2] == 'с_':
+            if poll[x][y][0:2] == 'с_':
+                for i in range(len(figures)):
+                    if figures[i] in poll[x][y] and poll[x][y][-5] == 'ч':
+                        eatb[i] += 1
+                        break
+                    elif figures[i] in poll[x][y] and poll[x][y][-5] != 'ч':
+                        eatw[i] += 1
+                        break
+            poll[x][y] = poll[self.ordin[0]][self.ordin[1]]
+            poll[self.ordin[0]][self.ordin[1]] = '-'
+            cleaner()
+        else:
             cleaner()
 
     def get_click(self, mouse_pos):

@@ -175,37 +175,3 @@ class Table:
         self.moves = self.rook()
         self.moves += self.bishop()
         return self.moves
-
-
-pole = [['ладья_ч.png', 'конь_ч.png', 'слон_ч.png', 'королева_ч.png', 'король_ч.png', 'слон_ч.png', 'конь_ч.png', 'ладья_ч.png'],
-        ['пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png', 'пешка_ч.png'],
-        ['-', '-', '-', '-', '-', '-', '-', '-'],
-        ['-', '-', '-', '-', '-', '-', '-', '-'],
-        ['-', '-', '-', '-', 'королева.png', '-', '-', '-'],
-        ['-', '-', '-', '-', '-', '-', '-', '-'],
-        ['слон.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png', 'пешка.png'],
-        ['ладья.png', 'конь.png', 'слон.png', 'королева.png', 'король.png', 'слон.png', 'конь.png', 'ладья.png']]
-
-b = [4, 4]
-figure, can_moves, proof = Table(), [], pole[b[0]][b[1]].split('.')[0]
-figure.stay(pole, b)
-if proof == 'пешка' or proof == 'пешка_ч':
-    can_moves = figure.pawn()
-elif proof == 'король' or proof == 'король_ч':
-    can_moves = figure.king()
-elif proof == 'конь' or proof == 'конь_ч':
-    can_moves = figure.knight()
-elif proof == 'ладья' or proof == 'ладья_ч':
-    can_moves = figure.rook()
-elif proof == 'слон' or proof == 'слон_ч':
-    can_moves = figure.bishop()
-elif proof == 'королева' or proof == 'королева_ч':
-    can_moves = figure.queen()
-if len(can_moves) != 0:
-    for i in can_moves:
-        if pole[i[0]][i[1]] != '-':
-            pole[i[0]][i[1]] = 'с_' + pole[i[0]][i[1]]
-        else:
-            pole[i[0]][i[1]] = '*'
-for i in pole:
-    print(i)
