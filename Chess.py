@@ -163,7 +163,7 @@ class Board:
 
 
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
 board = Board(8, 8)
 board.set_view(950, 140, 100)
 running = True
