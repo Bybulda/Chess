@@ -21,6 +21,8 @@ def start_game(time):
         timers[0], timers[1] = timedelta(minutes=5), timedelta(minutes=5)
     elif time == 'long':
         timers[0], timers[1] = timedelta(minutes=30), timedelta(minutes=30)
+
+
 def draw_time():
     fonte(timers[0].__str__(), 375, 418, tim)
     fonte(timers[1].__str__(), 375, 618, tim)
