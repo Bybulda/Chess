@@ -46,6 +46,8 @@ def get_menu_button(mouse_pos):
         return 'short'
     elif 213 <= x <= 633 and 739 <= y <= 943:
         return 'long'
+    elif 639 <= x <= 829 and  593 <= y <= 681:
+        return 'rematch'
 
 
 def cleaner():
@@ -134,7 +136,7 @@ class Board:
 
 
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((1920, 1080))
 board = Board(8, 8)
 board.set_view(950, 140, 100)
 running = True
@@ -173,6 +175,9 @@ while running:
                         start = 0
                         start_game('long')
                     poll = deepcopy(Config.pole)
+                if end:
+                    if get_menu_button(event.pos) == 'rematch':
+                        end, start = 0, 1
                 elif not start and not end:
                     Button.all_sprites.update(event)
                     cd = Button.button.get_hod()
@@ -191,6 +196,7 @@ while running:
         elif end and not start:
             screen.blit(load_image('screenshot.png'), (0, 0))
             screen.blit(load_image('финишное_меню.png'), (565, 246))
+            fonte('REMATCH', 666, 593 + 33, font)
         else:
             screen.fill((64, 58, 58))
             board.render(screen)

@@ -3,7 +3,7 @@ import pygame
 import sys
 
 
-screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((1920, 1080))
 
 figures = ['пешка', 'ладья', 'конь', 'слон', 'королева', 'король']
 
