@@ -28,9 +28,9 @@ def start_game(time):
     eatb, eatw = [0] * 6, [0] * 6
 
 
-def draw_time():
-    fonte(timers[0].__str__(), 375, 418, tim)
-    fonte(timers[1].__str__(), 375, 618, tim)
+def draw_time(pos1, pos2):
+    fonte(timers[0].__str__(), *pos1, tim)
+    fonte(timers[1].__str__(), *pos2, tim)
 
 
 def stater(x, y): return poll[x][y] != '-'
@@ -59,6 +59,8 @@ def get_menu_button(mouse_pos):
         return 'menu'
     elif 1099 <= x <= 1289 and 593 <= y <= 681:
         return 'exit'
+    elif 50 <= x <= 230 and 950 <= y <= 1038:
+        return 'end'
 
 
 def cleaner():
@@ -68,6 +70,17 @@ def cleaner():
                 poll[i][j] = '-'
             elif 'с_' in poll[i][j]:
                 poll[i][j] = poll[i][j][2::]
+
+
+def finder():
+    white, black = 0, 0
+    for i in range(8):
+        for j in range(8):
+            if 'король_ч' in poll[i][j]:
+                black += 1
+            elif 'король.' in poll[i][j]:
+                white += 1
+    return black, white
 
 
 class Board:
@@ -197,9 +210,11 @@ while running:
                 timers[0] -= timedelta(seconds=1)
             if event.type == MYTIMER2:
                 timers[1] -= timedelta(seconds=1)
-            if keyboard.is_pressed('alt') and end == 0 and start == 0:
-                end = 1
-                ender()
+            if end == 0 and start == 0:
+                sm = finder()
+                if keyboard.is_pressed('alt') or sum(sm) != 2:
+                    end = 1
+                    ender()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start:
                     mode = get_menu_button(event.pos)
@@ -217,16 +232,21 @@ while running:
                     elif get_menu_button(event.pos) == 'rematch':
                         end = 0
                         start_game(mode)
+                    elif get_menu_button(event.pos) == 'exit':
+                        running = False
                 elif not start and not end:
-                    Button.all_sprites.update(event)
-                    cd = Button.button.get_hod()
-                    if cd == 'b':
-                        pygame.time.set_timer(MYTIMER2, 1000)
-                        pygame.time.set_timer(MYTIMER1, 0)
-                    elif cd == 'w':
-                        pygame.time.set_timer(MYTIMER1, 1000)
-                        pygame.time.set_timer(MYTIMER2, 0)
-                    board.get_click(event.pos)
+                    if get_menu_button(event.pos) == 'end':
+                        start = 1
+                    else:
+                        Button.all_sprites.update(event)
+                        cd = Button.button.get_hod()
+                        if cd == 'b':
+                            pygame.time.set_timer(MYTIMER2, 1000)
+                            pygame.time.set_timer(MYTIMER1, 0)
+                        elif cd == 'w':
+                            pygame.time.set_timer(MYTIMER1, 1000)
+                            pygame.time.set_timer(MYTIMER2, 0)
+                        board.get_click(event.pos)
         if start:
             screen.blit(load_image('меню_старт.png'), (0, 0))
             fonte('LONG MATCH', 235, 820, Menuf)
@@ -244,5 +264,6 @@ while running:
             Button.all_sprites.draw(screen)
             [fonte(eatw[i], 140 * (i + 1) - 25, 285, numfig) for i in range(6)]
             [fonte(eatb[i], 140 * (i + 1) - 25, 885, numfig) for i in range(6)]
-            draw_time()
+            fonte('END GAME', 75, 980, font)
+            draw_time((375, 418), (375, 618))
         pygame.display.flip()

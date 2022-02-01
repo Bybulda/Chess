@@ -10,7 +10,7 @@ class Buttony(pygame.sprite.Sprite):
 
     def __init__(self, group=all_sprites):
         super().__init__(group)
-        self.image = Buttony.imbel
+        self.image = Buttony.imch
         self.rect = self.image.get_rect()
         self.rect.x = 250
         self.rect.y = 487
@@ -21,10 +21,10 @@ class Buttony(pygame.sprite.Sprite):
                 self.rect.collidepoint(args[0].pos):
             if self.image == self.imbel:
                 self.image = self.imch
-                self.hod = 'b'
+                self.hod = 'w'
             else:
                 self.image = self.imbel
-                self.hod = 'w'
+                self.hod = 'b'
 
     def get_hod(self):
         return self.hod
