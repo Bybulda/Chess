@@ -12,6 +12,7 @@ from PIL import Image, ImageFilter
 
 end = 0
 start = 1
+won = [0, 0]
 timers = [0, 0]
 poll, eatw, eatb = [], [], []
 
@@ -28,9 +29,9 @@ def start_game(time):
     eatb, eatw = [0] * 6, [0] * 6
 
 
-def draw_time(pos1, pos2):
-    fonte(timers[0].__str__(), *pos1, tim)
-    fonte(timers[1].__str__(), *pos2, tim)
+def draw_time(pos1, pos2, fontt):
+    fonte(timers[1].__str__(), *pos1, fontt)
+    fonte(timers[0].__str__(), *pos2, fontt)
 
 
 def stater(x, y): return poll[x][y] != '-'
@@ -136,26 +137,40 @@ class Board:
         rowi = posy // self.cell_size
         return rowi, coli
 
-    def on_click(self, cell):
+    def on_click(self, cell, fig):
         x, y = cell
         if stater(x, y) and poll[x][y] != '*' and poll[x][y][0:2] != 'с_':
             cleaner()
             self.ordin = x, y
             figure, proof = Table(), poll[x][y].split('.')[0]
-            figure.stay(poll, cell)
+            so = figure.stay(poll, cell)
             can_moves = []
-            if proof == 'пешка' or proof == 'пешка_ч':
-                can_moves = figure.pawn()
-            elif proof == 'король' or proof == 'король_ч':
-                can_moves = figure.king()
-            elif proof == 'конь' or proof == 'конь_ч':
-                can_moves = figure.knight()
-            elif proof == 'ладья' or proof == 'ладья_ч':
-                can_moves = figure.rook()
-            elif proof == 'слон' or proof == 'слон_ч':
-                can_moves = figure.bishop()
-            elif proof == 'королева' or proof == 'королева_ч':
-                can_moves = figure.queen()
+            if figure.color == 0 and fig == 'w':
+                if proof == 'пешка_ч':
+                    can_moves = figure.pawn()
+                elif proof == 'король_ч':
+                    can_moves = figure.king()
+                elif proof == 'конь_ч':
+                    can_moves = figure.knight()
+                elif proof == 'ладья_ч':
+                    can_moves = figure.rook()
+                elif proof == 'слон_ч':
+                    can_moves = figure.bishop()
+                elif proof == 'королева_ч':
+                    can_moves = figure.queen()
+            elif figure.color == 1 and fig == 'b':
+                if proof == 'пешка':
+                    can_moves = figure.pawn()
+                elif proof == 'король':
+                    can_moves = figure.king()
+                elif proof == 'конь':
+                    can_moves = figure.knight()
+                elif proof == 'ладья':
+                    can_moves = figure.rook()
+                elif proof == 'слон':
+                    can_moves = figure.bishop()
+                elif proof == 'королева':
+                    can_moves = figure.queen()
             if len(can_moves) != 0:
                 for i in can_moves:
                     if poll[i[0]][i[1]] != '-':
@@ -177,10 +192,10 @@ class Board:
         else:
             cleaner()
 
-    def get_click(self, mouse_pos):
+    def get_click(self, mouse_pos, fig):
         cell = self.get_cell(mouse_pos)
         if cell:
-            self.on_click(cell)
+            self.on_click(cell, fig)
 
 
 pygame.init()
@@ -193,6 +208,7 @@ font = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 30)
 numfig = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 20)
 Menuf = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 60)
 tim = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 40)
+wom = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 25)
 mode = ''
 
 
@@ -207,13 +223,19 @@ while running:
             if event.type == pygame.QUIT or keyboard.is_pressed('escape'):
                 running = False
             if event.type == MYTIMER1:
-                timers[0] -= timedelta(seconds=1)
-            if event.type == MYTIMER2:
                 timers[1] -= timedelta(seconds=1)
+            if event.type == MYTIMER2:
+                timers[0] -= timedelta(seconds=1)
             if end == 0 and start == 0:
                 sm = finder()
                 if keyboard.is_pressed('alt') or sum(sm) != 2:
                     end = 1
+                    pygame.time.set_timer(MYTIMER2, 0)
+                    pygame.time.set_timer(MYTIMER1, 0)
+                    if sm[0] == 1 and sm[1] == 0:
+                        won[1] += 1
+                    elif sm[1] == 1 and sm[0] == 0:
+                        won[0] += 1
                     ender()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start:
@@ -246,7 +268,7 @@ while running:
                         elif cd == 'w':
                             pygame.time.set_timer(MYTIMER1, 1000)
                             pygame.time.set_timer(MYTIMER2, 0)
-                        board.get_click(event.pos)
+                        board.get_click(event.pos, cd)
         if start:
             screen.blit(load_image('меню_старт.png'), (0, 0))
             fonte('LONG MATCH', 235, 820, Menuf)
@@ -258,6 +280,15 @@ while running:
             fonte('REMATCH', 666, 626, font)
             fonte('MAIN MENU', 666 + 190 + 30, 626, font)
             fonte('EXIT GAME', 666 + 190 * 2 + 73, 626, font)
+            fonte('WHITE', 565 + 102, 246 + 85, Menuf)
+            fonte('BLACK', 565 + 102, 246 + 205, Menuf)
+            draw_time((983, 465), (983, 345), wom)
+            fonte('L' if sm[0] == 1 else 'W', 895, 335, Menuf)
+            fonte('L' if sm[0] == 0 else 'W', 895, 450, Menuf)
+            fonte(f'{sum(eatb)}', 1110, 335, Menuf)
+            fonte(f'{sum(eatw)}', 1110, 455, Menuf)
+            fonte(f'{won[0]}', 1215, 335, Menuf)
+            fonte(f'{won[1]}', 1215, 455, Menuf)
         else:
             screen.fill((64, 58, 58))
             board.render(screen)
@@ -265,5 +296,5 @@ while running:
             [fonte(eatw[i], 140 * (i + 1) - 25, 285, numfig) for i in range(6)]
             [fonte(eatb[i], 140 * (i + 1) - 25, 885, numfig) for i in range(6)]
             fonte('END GAME', 75, 980, font)
-            draw_time((375, 418), (375, 618))
+            draw_time((375, 418), (375, 618), tim)
         pygame.display.flip()
