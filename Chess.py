@@ -13,15 +13,19 @@ from PIL import Image, ImageFilter
 end = 0
 start = 1
 timers = [0, 0]
-eatw = [0, 0, 0, 0, 0, 0]
-eatb = [0, 0, 0, 0, 0, 0]
+poll, eatw, eatb = [], [], []
 
 
 def start_game(time):
+    global poll
+    global eatb
+    global eatw
     if time == 'short':
         timers[0], timers[1] = timedelta(minutes=5), timedelta(minutes=5)
     elif time == 'long':
         timers[0], timers[1] = timedelta(minutes=30), timedelta(minutes=30)
+    poll = deepcopy(Config.pole)
+    eatb, eatw = [0] * 6, [0] * 6
 
 
 def draw_time():
@@ -51,6 +55,10 @@ def get_menu_button(mouse_pos):
         return 'long'
     elif 639 <= x <= 829 and 593 <= y <= 681:
         return 'rematch'
+    elif 869 <= x <= 1059 and 593 <= y <= 681:
+        return 'menu'
+    elif 1099 <= x <= 1289 and 593 <= y <= 681:
+        return 'exit'
 
 
 def cleaner():
@@ -172,6 +180,7 @@ font = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 30)
 numfig = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 20)
 Menuf = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 60)
 tim = pygame.font.Font(os.path.join('data', 'Leto Text Sans Defect.otf'), 40)
+mode = ''
 
 
 while running:
@@ -193,18 +202,21 @@ while running:
                 ender()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start:
-                    if get_menu_button(event.pos) == 'exit':
+                    mode = get_menu_button(event.pos)
+                    if mode == 'exit':
                         running = False
-                    elif get_menu_button(event.pos) == 'short':
+                    elif mode == 'short':
                         start = 0
                         start_game('short')
-                    elif get_menu_button(event.pos) == 'long':
+                    elif mode == 'long':
                         start = 0
                         start_game('long')
-                    poll = deepcopy(Config.pole)
                 if end:
-                    if get_menu_button(event.pos) == 'rematch':
+                    if get_menu_button(event.pos) == 'menu':
                         end, start = 0, 1
+                    elif get_menu_button(event.pos) == 'rematch':
+                        end = 0
+                        start_game(mode)
                 elif not start and not end:
                     Button.all_sprites.update(event)
                     cd = Button.button.get_hod()
@@ -223,7 +235,9 @@ while running:
         elif end and not start:
             screen.blit(load_image('screenshot.png'), (0, 0))
             screen.blit(load_image('финишное_меню.png'), (565, 246))
-            fonte('REMATCH', 666, 593 + 33, font)
+            fonte('REMATCH', 666, 626, font)
+            fonte('MAIN MENU', 666 + 190 + 30, 626, font)
+            fonte('EXIT GAME', 666 + 190 * 2 + 73, 626, font)
         else:
             screen.fill((64, 58, 58))
             board.render(screen)
